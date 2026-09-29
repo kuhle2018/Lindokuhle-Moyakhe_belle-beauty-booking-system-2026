@@ -11,7 +11,7 @@ function isValidDate(value) { return /^\d{4}-\d{2}-\d{2}$/.test(value || '') }
 
 function clean(value, max) { return typeof value === 'string' ? value.trim().slice(0, max) : '' }
 
-async function notifyOwner(message) {
+async function notifyWhatsApp(message) {
   const { WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID, BELLE_OWNER_WHATSAPP } = process.env
   if (!WHATSAPP_ACCESS_TOKEN || !WHATSAPP_PHONE_NUMBER_ID || !BELLE_OWNER_WHATSAPP) return
   const response = await fetch(`https://graph.facebook.com/v22.0/${WHATSAPP_PHONE_NUMBER_ID}/messages`, {
@@ -20,6 +20,33 @@ async function notifyOwner(message) {
     body: JSON.stringify({ messaging_product: 'whatsapp', to: BELLE_OWNER_WHATSAPP, type: 'text', text: { preview_url: false, body: message } }),
   })
   if (!response.ok) console.error('WhatsApp notification failed:', await response.text())
+}
+
+async function notifyEmail(message) {
+  const { RESEND_API_KEY, BELLE_OWNER_EMAIL } = process.env
+  if (!RESEND_API_KEY || !BELLE_OWNER_EMAIL) return
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: 'Belle Beauty <onboarding@resend.dev>', to: [BELLE_OWNER_EMAIL], subject: 'Belle Beauty booking notification', text: message }),
+  })
+  if (!response.ok) console.error('Email notification failed:', await response.text())
+}
+
+async function notifySms(message) {
+  const { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM, BELLE_OWNER_SMS = '27730806573' } = process.env
+  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_FROM) return
+  const body = new URLSearchParams({ To: BELLE_OWNER_SMS, From: TWILIO_FROM, Body: message })
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`, {
+    method: 'POST',
+    headers: { Authorization: `Basic ${Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64')}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+    body,
+  })
+  if (!response.ok) console.error('SMS notification failed:', await response.text())
+}
+
+async function notifyOwner(message) {
+  await Promise.allSettled([notifyWhatsApp(message), notifyEmail(message), notifySms(message)])
 }
 
 export default async function handler(request, response) {
