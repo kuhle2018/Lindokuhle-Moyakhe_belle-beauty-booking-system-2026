@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open the address shown by Vite, usually `http://localhost:5173`.
+Open the address shown by Vite, usually `belle-beauty-booking-mu.vercel.app`.
 
 ## Included in this version
 
