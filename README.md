@@ -4,7 +4,7 @@ A calm, mobile-friendly booking website built for **Belle Beauty**, a hair weave
 
 🔗 **Live site:** https://belle-beauty-booking-mu.vercel.app
 
-![Belle Beauty home page](./screenshots/01-home.png)
+![Belle Beauty home page](./02-home.png)
 
 ## Features
 
@@ -20,11 +20,11 @@ A calm, mobile-friendly booking website built for **Belle Beauty**, a hair weave
 
 | Home | Installation Menu | Shop |
 |---|---|---|
-| ![Home](./screenshots/01-home.png) | ![Installation menu](./screenshots/02-services.png) | ![Shop](./screenshots/03-shop.png) |
+| ![Home](./01-home.png) | ![Installation menu](./02-services.png) | ![Shop](./03-shop.png) |
 
 | Gallery | About | Book |
 |---|---|---|
-| ![Gallery](./screenshots/04-gallery.png) | ![About](./screenshots/05-about.png) | ![Booking form](./screenshots/06-book.png) |
+| ![Gallery](./04-gallery.png) | ![About](./05-about.png) | ![Booking form](./06-book.png) |
 
 ## Tech stack
 
