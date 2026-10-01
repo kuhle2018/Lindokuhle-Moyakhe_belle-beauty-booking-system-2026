@@ -1,6 +1,37 @@
-# Belle Beauty
+# Belle Beauty — Hair Weave Salon Booking Site
 
-A calm, mobile-friendly booking site for Belle Beauty by Lindokuhle Moyakhe.
+A calm, mobile-friendly booking website built for **Belle Beauty**, a hair weave installation studio in Cape Town. Designed and developed by **Lindokuhle Moyakhe**.
+
+🔗 **Live site:** https://belle-beauty-booking-mu.vercel.app
+
+![Belle Beauty home page](./screenshots/01-home.png)
+
+## Features
+
+- On-brand design in an off-white, nude and black palette
+- Installation service menu with pricing
+- Shop page for weave bundles
+- Booking form — name, surname, phone, service, date and time
+- Booking requests sent straight to the owner's WhatsApp, no admin needed to receive them
+- Appointment changes and cancellations handled directly over WhatsApp
+- Fully responsive, built mobile-first since most bookings happen on a phone
+
+## Screenshots
+
+| Home | Installation Menu | Shop |
+|---|---|---|
+| ![Home](./screenshots/01-home.png) | ![Installation menu](./screenshots/02-services.png) | ![Shop](./screenshots/03-shop.png) |
+
+| Gallery | About | Book |
+|---|---|---|
+| ![Gallery](./screenshots/04-gallery.png) | ![About](./screenshots/05-about.png) | ![Booking form](./screenshots/06-book.png) |
+
+## Tech stack
+
+- Vite-powered frontend, deployed on Vercel
+- Optional serverless backend (`api/bookings.js`) for database-backed bookings
+- Supabase for the optional database layer
+- WhatsApp Cloud API / Resend for optional automated notifications
 
 ## Run locally
 
@@ -9,23 +40,19 @@ npm install
 npm run dev
 ```
 
-Open the address shown by Vite, usually `belle-beauty-booking-mu.vercel.app`.
+Vite will print a local address in the terminal, usually `http://localhost:5173`. The live production site is the Vercel link above — that stays the same regardless of what address your local dev server uses.
 
-## Included in this version
+## Current booking flow (v1 — live now)
 
-- Installation menu and Belle Beauty visual design
-- Booking form with name, surname, phone, service, date and time
-- Booking requests sent directly to Belle Beauty on WhatsApp
-- Appointment changes and cancellations requested directly on WhatsApp
-- Owner WhatsApp contact: 073 080 6573
+The live site sends booking requests directly to WhatsApp. It doesn't yet save bookings to a database or check availability — the owner confirms each request manually in WhatsApp. This keeps the first launch simple, with no API or database required to go live.
 
-## Important for going live
+## Optional v2 — database-backed bookings
 
-The website currently sends booking requests directly to WhatsApp and does not save bookings or check availability. Lindokuhle must confirm each requested appointment in WhatsApp. This avoids requiring an API or database for the initial launch, but bookings and cancellations are handled manually.
+`api/bookings.js` supports saving bookings to a database and sending automatic email or WhatsApp notifications instead of the manual flow above. It requires:
 
-The optional `api/bookings.js` endpoint supports database-backed bookings and email, SMS, or WhatsApp notifications. It requires a serverless host such as Vercel, the SQL in `supabase/schema.sql`, and the server environment variables below. Do not deploy the API flow without configuring those credentials.
-
-Set these server environment variables when the relevant provider is ready:
+- A serverless host (already set up on Vercel)
+- The schema in `supabase/schema.sql`
+- The environment variables below
 
 ```text
 # WhatsApp Cloud API (optional)
@@ -36,12 +63,16 @@ BELLE_OWNER_WHATSAPP=27730806573
 # Resend email (optional)
 RESEND_API_KEY=
 BELLE_OWNER_EMAIL=your-email@example.com
-
-# Twilio SMS (optional)
-TWILIO_ACCOUNT_SID=
-TWILIO_AUTH_TOKEN=
-TWILIO_FROM=
-BELLE_OWNER_SMS=27730806573
 ```
 
-For email, verify a sending domain with Resend before using this in production. For SMS, `TWILIO_FROM` must be a Twilio SMS-capable number.
+Verify a sending domain with Resend before using email in production. Do not deploy the v2 flow without these credentials configured.
+
+## Owner contact
+
+Belle Beauty WhatsApp (bookings): 073 080 6573
+
+## Author
+
+**Lindokuhle Moyakhe** — Software Developer & Data Analyst, Cape Town
+Email (queries): lindokuhle.moyakhe@gmail.com
+GitHub: [github.com/kuhle2018](https://github.com/kuhle2018) · LinkedIn: [Lindokuhle Moyakhe](https://www.linkedin.com/in/lindokuhle-moyakhe-603661253/)
